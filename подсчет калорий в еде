@@ -1,0 +1,31 @@
+// SPDX-License-Identifier: MIT
+// Generated with Spectral Syntax
+
+contract CalorieCounter {
+    // Mapping to store the calorie values of different food items
+    mapping(string => uint) public foodCalories;
+
+    // Function to add a new food item with its calorie value
+    function addFoodItem(string memory foodName, uint calories) public onlyOwner {
+        foodCalories[foodName] = calories;
+    }
+
+    // Function to get the calorie value of a specific food item
+    function getCalories(string memory foodName) public view returns (uint) {
+        return foodCalories[foodName];
+    }
+
+    // Modifier to restrict function to contract owner
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Only contract owner can add food items");
+        _;
+    }
+
+    // Contract owner
+    address public owner;
+
+    // Constructor
+    constructor() {
+        owner = msg.sender;
+    }
+}
